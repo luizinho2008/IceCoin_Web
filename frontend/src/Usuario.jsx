@@ -6,7 +6,7 @@ import Logo from './imgs/icecoin.png';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
-const Cadastro = () => {
+const Usuario = () => {
     const [nome, setNome] = useState("");
     const navigate = useNavigate();
 
@@ -41,4 +41,4 @@ const Cadastro = () => {
     );
 }
 
-export default Cadastro;
+export default Usuario;

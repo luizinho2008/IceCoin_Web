@@ -17,12 +17,10 @@ h2 {
     color: rgb(0, 40, 66);
     margin-left: 3%;
 }
-h4 {
-    background-color: rgb(233, 233, 229);
-    color: rgb(0, 40, 66);
-    font-weight: bolder;
-    display: block;
-    
+.nomes {
+    background-color: rgb(0, 40, 66);
+    color: rgb(233, 233, 229);
+    margin-left: 3%;
 }
 #form {
     background-color: rgb(233, 233, 229);
@@ -66,31 +64,11 @@ label {
     font-weight: bolder;
     text-align: center;
 }
-#total {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    height: 60px;
+.d {
+    width: 500px;
     border-radius: 20px;
-    background-image: linear-gradient(to right,blue, dodgerblue);
-    font-weight: bolder;
-    font-size: 40px;
 }
-#user {
+h4 {
     display: block;
     margin-left: auto;
-    margin-right: 2%;
-}
-.actions {
-    width: 50%;
-    height: 40px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    border: none;
-    background-color: white;
-    border-radius: 20px;
-    font-weight: bolder;
-    font-size: 20px;
 }

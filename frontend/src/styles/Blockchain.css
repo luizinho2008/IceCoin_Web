@@ -17,13 +17,6 @@ h2 {
     color: rgb(0, 40, 66);
     margin-left: 3%;
 }
-h4 {
-    background-color: rgb(233, 233, 229);
-    color: rgb(0, 40, 66);
-    font-weight: bolder;
-    display: block;
-    
-}
 #form {
     background-color: rgb(233, 233, 229);
     display: block;
@@ -66,31 +59,17 @@ label {
     font-weight: bolder;
     text-align: center;
 }
-#total {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    height: 60px;
+
+#button3 {
+    width: 75%;
+    height: 50px;
     border-radius: 20px;
-    background-image: linear-gradient(to right,blue, dodgerblue);
-    font-weight: bolder;
-    font-size: 40px;
-}
-#user {
-    display: block;
-    margin-left: auto;
-    margin-right: 2%;
-}
-.actions {
-    width: 50%;
-    height: 40px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
     border: none;
-    background-color: white;
-    border-radius: 20px;
-    font-weight: bolder;
+    background-color: blue;
+    color: white;
     font-size: 20px;
+    font-weight: bolder;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

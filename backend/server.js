@@ -58,11 +58,48 @@ app.post("/api/cadastro", (req, res) => {
     });
 });
 
+app.post("/api/historico", (req, res) => {
+    const { id_usuario, valor } = req.body;
+
+    const sql = `INSERT INTO historico(id_usuario, valor) VALUES(?, ?)`;
+    db.query(sql, [id_usuario, valor], (erro, resultados) => {
+        if (erro) {
+            return res.json("Erro ao inserir o histórico no MySQL");
+        }
+        else {
+            res.json(resultados);
+        }
+    });
+});
+
+app.get("/api/blockchain", (req, res) => {
+    const sql = `SELECT * FROM blockchain`;
+    db.query(sql, (erro, resultados) => {
+        if (erro) {
+            return res.json("Erro ao listar a blockchain");
+        }
+        else {
+            res.json(resultados);
+        }
+    });
+});
+
 app.get("/api/total/:id", (req, res) => {
     const sql = `SELECT SUM(saldo) AS total FROM contas WHERE id_usuario = ?`;
     db.query(sql, [req.params.id], (erro, resultados) => {
         if(erro) {
             res.json(`Falha ao buscar saldo`);
+        } else {
+            res.json(resultados);
+        }
+    })
+})
+
+app.get("/api/hashs/:id", (req, res) => {
+    const sql = `SELECT * FROM contas WHERE id_usuario = ?`;
+    db.query(sql, [req.params.id], (erro, resultados) => {
+        if(erro) {
+            res.json(`Falha ao buscar os hashs`);
         } else {
             res.json(resultados);
         }
