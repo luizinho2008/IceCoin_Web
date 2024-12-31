@@ -60,7 +60,7 @@ const Carteira = () => {
                     IC$ {total} - R$ {total * 25}
                 </div>
             </div> <br />
-            <button className='actions'>Gerar endereço</button> <br />
+            <Link to="/gerarendereco" style={{textDecoration: "none"}}><button className='actions'>Gerar endereço</button> <br /></Link>
             <button className='actions'>Transferir</button> <br />
             <Link to="/blockchain" style={{textDecoration: "none"}}><button className='actions'>Blockchain</button> <br /></Link>
             <Link to="/cotacao" style={{textDecoration: "none"}}><button className='actions'>Cotação</button> <br /></Link>

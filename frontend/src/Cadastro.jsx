@@ -49,6 +49,14 @@ const Cadastro = () => {
                             outline: "none",
                         }
                     });
+
+                    axios.post("http://localhost:9000/api/historico", {id_usuario: resposta.data.id, valor: 0})
+                    .then(resposta => {
+                        console.log(resposta);
+                    })
+                    .catch(erro => {
+                        console.log(erro);
+                    })
                 }
                 else {
                     toast.error(resposta.data, {

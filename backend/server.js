@@ -51,7 +51,7 @@ app.post("/api/cadastro", (req, res) => {
                 if (erro) {
                     res.json("Falha ao realizar a consulta ao MySQL");
                 } else {
-                    res.status(201).json({ mensagem: "Usuário cadastrado com sucesso", resultados });
+                    res.status(201).json({ mensagem: "Usuário cadastrado com sucesso", resultados, id: resultados.insertId});
                 }
             });
         }
@@ -95,11 +95,35 @@ app.get("/api/total/:id", (req, res) => {
     })
 })
 
+app.get("/api/hashs", (req, res) => {
+    const sql = `SELECT * FROM contas`;
+    db.query(sql, (erro, resultados) => {
+        if(erro) {
+            res.json(`Falha ao buscar os hashs`);
+        } else {
+            res.json(resultados);
+        }
+    })
+})
+
 app.get("/api/hashs/:id", (req, res) => {
     const sql = `SELECT * FROM contas WHERE id_usuario = ?`;
     db.query(sql, [req.params.id], (erro, resultados) => {
         if(erro) {
             res.json(`Falha ao buscar os hashs`);
+        } else {
+            res.json(resultados);
+        }
+    })
+})
+
+app.post("/api/hashs", (req, res) => {
+    const {hash, id_usuario, saldo} = req.body;
+
+    const sql = `INSERT INTO contas(endereco, id_usuario, saldo) VALUES(?, ?, ?)`;
+    db.query(sql, [hash, id_usuario, saldo], (erro, resultados) => {
+        if(erro) {
+            res.json(`Falha ao inserir a conta`);
         } else {
             res.json(resultados);
         }

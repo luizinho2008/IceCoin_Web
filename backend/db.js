@@ -1,10 +1,16 @@
 const mysql = require("mysql2");
 
-const hostname = "nx6vj.h.filess.io";
-const database = "IceCoin_betweenfox";
-const port = "3307";
-const username = "IceCoin_betweenfox";
-const password = "186f084cc6f22a27c5ff1ea3faf39e85896fb47e";
+// const hostname = "nx6vj.h.filess.io";
+// const database = "IceCoin_betweenfox";
+// const port = "3307";
+// const username = "IceCoin_betweenfox";
+// const password = "186f084cc6f22a27c5ff1ea3faf39e85896fb47e";
+
+const hostname = "localhost";
+const database = "icecoin_db";
+const port = "3306";
+const username = "root";
+const password = "";
 
 const connexionDB = mysql.createConnection({
     host: hostname,
