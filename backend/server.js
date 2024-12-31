@@ -128,7 +128,47 @@ app.post("/api/hashs", (req, res) => {
             res.json(resultados);
         }
     })
-})
+});
+
+app.put("/api/decrescimo", (req, res) => {
+    const {valor, remetente} = req.body;
+
+    const sql = `UPDATE contas SET saldo = saldo - ? WHERE endereco = ?`;
+    db.query(sql, [valor, remetente], (erro, resultados) => {
+        if(erro) {
+            res.json(erro);
+        } else {
+            res.json(resultados);
+        }
+    })
+});
+
+app.put("/api/acrescimo", (req, res) => {
+    const {valor, destinatario} = req.body;
+
+    const sql = `UPDATE contas SET saldo = saldo + ? WHERE endereco = ?`;
+    db.query(sql, [valor, destinatario], (erro, resultados) => {
+        if(erro) {
+            res.json(erro);
+        } else {
+            res.json(resultados);
+        }
+    })
+});
+
+app.post("/api/transacao", (req, res) => {
+    const {remetente, destinatario, valor} = req.body;
+
+    const sql = `INSERT INTO transacoes(enderecoRemetente, enderecoDestinatario, valor) VALUES(?, ?, ?)`;
+    db.query(sql, [remetente, destinatario, valor], (erro, resultados) => {
+        if(erro) {
+            res.json(erro);
+        } else {
+            res.json(resultados);
+        }
+    })
+});
+
 
 app.listen(port, () => {
     console.log(`Servidor rodando com express na porta ${port}`);

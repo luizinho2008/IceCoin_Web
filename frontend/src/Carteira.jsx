@@ -61,7 +61,7 @@ const Carteira = () => {
                 </div>
             </div> <br />
             <Link to="/gerarendereco" style={{textDecoration: "none"}}><button className='actions'>Gerar endereço</button> <br /></Link>
-            <button className='actions'>Transferir</button> <br />
+            <Link to="/transferir" style={{textDecoration: "none"}}><button className='actions'>Transferir</button> <br /></Link>
             <Link to="/blockchain" style={{textDecoration: "none"}}><button className='actions'>Blockchain</button> <br /></Link>
             <Link to="/cotacao" style={{textDecoration: "none"}}><button className='actions'>Cotação</button> <br /></Link>
             <Link to="/seushashs" style={{textDecoration: "none"}}><button className='actions'>Seus Hashs</button></Link> <br />
