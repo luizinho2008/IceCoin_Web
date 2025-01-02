@@ -72,6 +72,18 @@ app.post("/api/historico", (req, res) => {
     });
 });
 
+app.get("/api/historico/:id", (req, res) => {
+    const sql = `SELECT * FROM historico WHERE id_usuario = ?`;
+    db.query(sql, [req.params.id], (erro, resultados) => {
+        if(erro) {
+            return res.json("Erro ao listar o histórico do usuário no MySQL");
+        }
+        else {
+            res.json(resultados);
+        }
+    });
+});
+
 app.get("/api/blockchain", (req, res) => {
     const sql = `SELECT * FROM blockchain`;
     db.query(sql, (erro, resultados) => {

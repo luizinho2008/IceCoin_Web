@@ -65,7 +65,7 @@ const Carteira = () => {
             <Link to="/blockchain" style={{textDecoration: "none"}}><button className='actions'>Blockchain</button> <br /></Link>
             <Link to="/cotacao" style={{textDecoration: "none"}}><button className='actions'>Cotação</button> <br /></Link>
             <Link to="/seushashs" style={{textDecoration: "none"}}><button className='actions'>Seus Hashs</button></Link> <br />
-            <button className='actions'>Seu relatório</button>
+            <Link to="/seurelatorio" style={{textDecoration: "none"}}><button className='actions'>Seu relatório</button></Link>
         </div>
     );
 };
