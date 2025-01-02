@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import SHA256 from 'crypto-js/sha256';
 
 const Transferir = () => {
     const [id, setId] = useState("");
@@ -14,13 +15,13 @@ const Transferir = () => {
     const [remetente, setRemetente] = useState("");
     const [destinatario, setDestinatario] = useState("");
     const [valor, setValor] = useState("");
+    const [hashAnterior, setHashAnterior] = useState("");
 
     const carregaInfo = () => {
         const token = sessionStorage.getItem("token");
         if (token) {
             const payload = token.split('.')[1];
             const decodedPayload = JSON.parse(atob(payload));
-            console.log("Decoded Payload:", decodedPayload);
             setId(decodedPayload.id);
         } else {
             navigate("/login");
@@ -28,17 +29,18 @@ const Transferir = () => {
     };
 
     const carregaSuasContas = () => {
-        axios
-            .get(`http://localhost:9000/api/hashs/${id}`)
-            .then((resposta) => {
-                console.log(resposta);
-                setContas(resposta.data);
-            })
-            .catch((erro) => {
-                console.log(erro);
-            });
+        axios.get(`http://localhost:9000/api/hashs/${id}`)
+        .then((resposta) => {
+            setContas(resposta.data);
+        })
+        .catch((erro) => {});
     };
 
+    const calcularHash = (hba, r, d, q) => {
+        const dados = hba + r + d + q;
+        return SHA256(dados).toString();
+    };
+    
     useEffect(() => {
         carregaInfo();
     }, []);
@@ -49,56 +51,48 @@ const Transferir = () => {
         }
     }, [id]);
 
-    const realizaTransacao = (event) => {
+    const realizaTransacao = async (event) => {
         event.preventDefault();
+    
         if (!remetente || !destinatario || !valor) {
             toast.error("Preencha todos os campos corretamente", {
-                style: {
-                    backgroundColor: "red",
-                    color: "white",
-                    fontWeight: "bold",
-                    outline: "none",
-                }
+                style: { backgroundColor: "red", color: "white", fontWeight: "bold" }
+            });
+            return;
+        }
+        if (remetente === destinatario) {
+            toast.error("O remetente e o destinatário não podem ser iguais", {
+                style: { backgroundColor: "red", color: "white" }
             });
             return;
         }
         const contaRemetente = contas.find(conta => conta.endereco === remetente);
         if (parseFloat(valor) > parseFloat(contaRemetente.saldo)) {
             toast.error("Saldo insuficiente para realizar a transferência", {
-                style: {
-                    backgroundColor: "red",
-                    color: "white",
-                }
+                style: { backgroundColor: "red", color: "white" }
             });
             return;
         }
-        else {
-            axios.put("http://localhost:9000/api/decrescimo", {valor, remetente})
-            .then(resposta => {
-                console.log(resposta);
-            })
-            .catch(erro => {
-                console.log(erro);
-            })
+        axios.put("http://localhost:9000/api/decrescimo", { valor, remetente });
+        axios.put("http://localhost:9000/api/acrescimo", { valor, destinatario });
+        axios.post("http://localhost:9000/api/transacao", { remetente, destinatario, valor });
 
-            axios.put("http://localhost:9000/api/acrescimo", {valor, destinatario})
-            .then(resposta => {
-                console.log(resposta);
-            })
-            .catch(erro => {
-                console.log(erro);
-            })
+        const resposta = await axios.get("http://localhost:9000/api/hashanterior");
+        console.log(resposta);
+        const hashAnterior = resposta.data;
 
-            axios.post("http://localhost:9000/api/transacao", {remetente, destinatario, valor})
-            .then(resposta => {
-                console.log(resposta);
-            })
-            .catch(erro => {
-                console.log(erro);
-            })
-        }
-        
-    };
+        const hashBloco = calcularHash(hashAnterior, remetente, destinatario, valor);
+
+        console.log("Remetente: " + remetente);
+        console.log("Destinatário: " + destinatario);
+        console.log("Quantidade: " + valor);
+        console.log("Hash do bloco anterior: " + hashAnterior);
+        console.log("Hash do bloco: " + hashBloco);
+
+        axios.post("http://localhost:9000/api/bloco", {hba: hashAnterior, hb: hashBloco, remetente: remetente, destinatario: destinatario, valor: valor});
+
+        navigate("/carteira");
+    };    
 
     return (
         <div>

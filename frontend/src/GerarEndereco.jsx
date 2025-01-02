@@ -45,6 +45,14 @@ const GerarEndereco = () => {
                     console.log(erro);
                 })
 
+                axios.post("http://localhost:9000/api/bloco", {hba: 0, hb: 0, remetente: null, destinatario: null, valor: 20000})
+                .then(resposta => {
+                    console.log(resposta);
+                })
+                .catch(erro => {
+                    console.log(erro);
+                })
+
                 axios.post("http://localhost:9000/api/historico", {id_usuario: id, valor: 20000})
                 .then(resposta => {
                     console.log(resposta);

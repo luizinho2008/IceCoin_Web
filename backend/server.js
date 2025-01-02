@@ -169,6 +169,30 @@ app.post("/api/transacao", (req, res) => {
     })
 });
 
+app.post("/api/bloco", (req, res) => {
+    const {hba, hb, remetente, destinatario, valor} = req.body;
+
+    const sql = `INSERT INTO blockchain(hash_bloco_anterior, hash_bloco, remetente, destinatario, valor) VALUES(?, ?, ?, ?, ?)`;
+    db.query(sql, [hba, hb, remetente, destinatario, valor], (erro, resultados) => {
+        if(erro) {
+            res.json(erro);
+        } else {
+            res.json(resultados);
+        }
+    })
+});
+
+app.get("/api/hashanterior", (req, res) => {
+    const sql = `SELECT * FROM blockchain ORDER BY id_bloco DESC LIMIT 1`;
+    db.query(sql, (erro, resultados) => {
+        if(erro) {
+            res.json(erro);
+        } else {
+            res.json(resultados[0].hash_bloco);
+        }
+    })
+});
+
 
 app.listen(port, () => {
     console.log(`Servidor rodando com express na porta ${port}`);
