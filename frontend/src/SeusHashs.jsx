@@ -25,7 +25,7 @@ const SeusHashs = () => {
     }
 
     const carregaSeusHashs = () => {
-        axios.get(`http://localhost:9000/api/hashs/${id}`)
+        axios.get(`https://icecoin.onrender.com/api/hashs/${id}`)
         .then(resposta => {
             setContas(resposta.data);
         })

@@ -26,7 +26,7 @@ const Login = () => {
             });
         }
         else {
-            axios.post("http://localhost:9000/api/authenticate", { nome, senha })
+            axios.post("https://icecoin.onrender.com/api/authenticate", { nome, senha })
             .then(resposta => {
                 console.log(resposta);
                 if(resposta.status === 401 || resposta.status === 404) {

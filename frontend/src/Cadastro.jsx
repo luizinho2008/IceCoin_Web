@@ -27,7 +27,7 @@ const Cadastro = () => {
             });
         }
         else {
-            axios.post("http://localhost:9000/api/cadastro", { nome, senha })
+            axios.post("https://icecoin.onrender.com/api/cadastro", { nome, senha })
             .then(resposta => {
                 console.log(resposta);
                 if(resposta.status === 200) {
@@ -50,7 +50,7 @@ const Cadastro = () => {
                         }
                     });
 
-                    axios.post("http://localhost:9000/api/historico", {id_usuario: resposta.data.id, valor: 0})
+                    axios.post("https://icecoin.onrender.com/api/historico", {id_usuario: resposta.data.id, valor: 0})
                     .then(resposta => {
                         console.log(resposta);
                     })

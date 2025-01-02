@@ -33,11 +33,11 @@ const GerarEndereco = () => {
         const newHash = uuidv4();
         setIdConta(newHash);
 
-        axios.get("http://localhost:9000/api/hashs")
+        axios.get("https://icecoin.onrender.com/api/hashs")
         .then(resposta => {
             console.log(resposta);
             if(resposta.data.length === 0) {
-                axios.post("http://localhost:9000/api/hashs", {hash: newHash, id_usuario: id, saldo: 20000})
+                axios.post("https://icecoin.onrender.com/api/hashs", {hash: newHash, id_usuario: id, saldo: 20000})
                 .then(resposta => {
                     console.log(resposta);
                 })
@@ -45,7 +45,7 @@ const GerarEndereco = () => {
                     console.log(erro);
                 })
 
-                axios.post("http://localhost:9000/api/bloco", {hba: 0, hb: 0, remetente: null, destinatario: null, valor: 20000})
+                axios.post("https://icecoin.onrender.com/api/bloco", {hba: 0, hb: 0, remetente: null, destinatario: null, valor: 20000})
                 .then(resposta => {
                     console.log(resposta);
                 })
@@ -53,7 +53,7 @@ const GerarEndereco = () => {
                     console.log(erro);
                 })
 
-                axios.post("http://localhost:9000/api/historico", {id_usuario: id, valor: 20000})
+                axios.post("https://icecoin.onrender.com/api/historico", {id_usuario: id, valor: 20000})
                 .then(resposta => {
                     console.log(resposta);
                 })
@@ -61,7 +61,7 @@ const GerarEndereco = () => {
                     console.log(erro);
                 })
             } else {
-                axios.post("http://localhost:9000/api/hashs", {hash: newHash, id_usuario: id, saldo: 0})
+                axios.post("https://icecoin.onrender.com/api/hashs", {hash: newHash, id_usuario: id, saldo: 0})
                 .then(resposta => {
                     console.log(resposta);
                 })

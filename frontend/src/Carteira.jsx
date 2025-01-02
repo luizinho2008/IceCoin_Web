@@ -26,7 +26,7 @@ const Carteira = () => {
     }
 
     const carregaTotal = () => {
-        axios.get(`http://localhost:9000/api/total/${id}`)
+        axios.get(`https://icecoin.onrender.com/api/total/${id}`)
         .then(resposta => {
             console.log(resposta);
             setTotal(resposta.data[0].total);

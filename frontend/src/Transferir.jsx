@@ -29,7 +29,7 @@ const Transferir = () => {
 
     useEffect(() => {
         if (id) {
-            axios.get(`http://localhost:9000/api/hashs/${id}`)
+            axios.get(`https://icecoin.onrender.com/api/hashs/${id}`)
                 .then((resposta) => {
                     setContas(resposta.data);
                 })
@@ -68,16 +68,16 @@ const Transferir = () => {
                 return;
             }
 
-            await axios.put("http://localhost:9000/api/decrescimo", { valor, remetente });
-            await axios.put("http://localhost:9000/api/acrescimo", { valor, destinatario });
+            await axios.put("https://icecoin.onrender.com/api/decrescimo", { valor, remetente });
+            await axios.put("https://icecoin.onrender.com/api/acrescimo", { valor, destinatario });
 
-            await axios.post("http://localhost:9000/api/transacao", { remetente, destinatario, valor });
+            await axios.post("https://icecoin.onrender.com/api/transacao", { remetente, destinatario, valor });
 
-            const respostaHash = await axios.get("http://localhost:9000/api/hashanterior");
+            const respostaHash = await axios.get("https://icecoin.onrender.com/api/hashanterior");
             const hashAnterior = respostaHash.data;
             const hashBloco = calcularHash(hashAnterior, remetente, destinatario, valor);
 
-            await axios.post("http://localhost:9000/api/bloco", {
+            await axios.post("https://icecoin.onrender.com/api/bloco", {
                 hba: hashAnterior,
                 hb: hashBloco,
                 remetente,
@@ -85,25 +85,25 @@ const Transferir = () => {
                 valor,
             });
 
-            const respostaIdDestinatario = await axios.get(`http://localhost:9000/api/idDestinatario/${destinatario}`);
+            const respostaIdDestinatario = await axios.get(`https://icecoin.onrender.com/api/idDestinatario/${destinatario}`);
             const idDestinatarioAtualizado = respostaIdDestinatario.data;
 
             if(id !== idDestinatarioAtualizado) {
-                const saldoRemetenteResposta = await axios.get(`http://localhost:9000/api/total/${id}`);
+                const saldoRemetenteResposta = await axios.get(`https://icecoin.onrender.com/api/total/${id}`);
                 const novoSaldoRemetente = saldoRemetenteResposta.data[0].total;
 
                 let novoSaldoDestinatario = 0;
                 if(idDestinatarioAtualizado) {
-                    const saldoDestinatarioResposta = await axios.get(`http://localhost:9000/api/total/${idDestinatarioAtualizado}`);
+                    const saldoDestinatarioResposta = await axios.get(`https://icecoin.onrender.com/api/total/${idDestinatarioAtualizado}`);
                     novoSaldoDestinatario = saldoDestinatarioResposta.data[0].total;
                 }
 
-                await axios.post(`http://localhost:9000/api/historico`, {
+                await axios.post(`https://icecoin.onrender.com/api/historico`, {
                     id_usuario: id,
                     valor: novoSaldoRemetente,
                 });
 
-                await axios.post(`http://localhost:9000/api/historico`, {
+                await axios.post(`https://icecoin.onrender.com/api/historico`, {
                     id_usuario: idDestinatarioAtualizado,
                     valor: novoSaldoDestinatario,
                 });

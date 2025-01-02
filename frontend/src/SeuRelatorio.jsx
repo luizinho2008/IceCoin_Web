@@ -30,7 +30,7 @@ const SeuRelatorio = () => {
     }, []);
 
     const carregaHistorico = () => {
-        axios.get(`http://localhost:9000/api/historico/${id}`)
+        axios.get(`https://icecoin.onrender.com/api/historico/${id}`)
         .then(resposta => {
             console.log(resposta);
             setHistorico(resposta.data);

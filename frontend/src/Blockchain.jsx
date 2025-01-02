@@ -11,7 +11,7 @@ const Blockchain = () => {
     const [blockchain, setBlockchain] = useState([]);
 
     const carregaBlockchain = () => {
-        axios.get("http://localhost:9000/api/blockchain")
+        axios.get("https://icecoin.onrender.com/api/blockchain")
         .then(resposta => {
             setBlockchain(resposta.data);
         })
