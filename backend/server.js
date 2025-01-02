@@ -193,6 +193,17 @@ app.get("/api/hashanterior", (req, res) => {
     })
 });
 
+app.get("/api/idDestinatario/:endereco", (req, res) => {
+    const sql = `SELECT * FROM contas WHERE endereco = ?`;
+    db.query(sql, [req.params.endereco], (erro, resultados) => {
+        if(erro) {
+            res.json(erro);
+        } else {
+            res.json(resultados[0].id_usuario);
+        }
+    })
+});
+
 
 app.listen(port, () => {
     console.log(`Servidor rodando com express na porta ${port}`);

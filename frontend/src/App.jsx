@@ -10,6 +10,7 @@ import Blockchain from './Blockchain';
 import SeusHashs from './SeusHashs';
 import GerarEndereco from './GerarEndereco';
 import Transferir from './Transferir';
+import SeuRelatorio from './SeuRelatorio';
 
 const App = () => {
     return (
@@ -26,6 +27,7 @@ const App = () => {
                 <Route path='/seushashs' element={<SeusHashs />} />
                 <Route path='/gerarendereco' element={<GerarEndereco />} />
                 <Route path='/transferir' element={<Transferir />} />
+                <Route path='/seurelatorio' element={<SeuRelatorio />} />
             </Routes>
         </BrowserRouter>
     )
