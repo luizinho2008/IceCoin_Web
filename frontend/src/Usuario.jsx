@@ -26,7 +26,7 @@ const Usuario = () => {
     }, []);
 
     const sair = () => {
-        sessionStorage.removeItem("token");
+        document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;';
         navigate("/login");
     }
 

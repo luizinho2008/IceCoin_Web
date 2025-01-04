@@ -1,53 +1,73 @@
 const express = require("express");
 const app = express();
-
 const db = require("./db");
-const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
-const port = 9000;
-
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
+const port = 9000;
+const jwtSecret = "seu_segredo_aqui"; // Mude isso para o seu segredo real
+
+// Configuração do CORS
 app.use(cors({
-    origin: 'https://icecoin.vercel.app',
-    credentials: true
+    origin: "http://localhost:5173", // URL do seu frontend
+    credentials: true, // Permite enviar e receber cookies
 }));
 
 app.use(express.json());
 app.use(cookieParser());
 
+// Middleware para autenticação do token
+const authenticateToken = (req, res, next) => {
+    const token = req.cookies.authToken;
+    if (!token) return res.status(401).json({ message: "Token não encontrado" });
+
+    jwt.verify(token, jwtSecret, (err, decoded) => {
+        if (err) return res.status(403).json({ message: "Token inválido" });
+        req.user = decoded; // Aqui você coloca os dados do usuário no request
+        next(); // Passa para o próximo middleware ou rota
+    });
+};
+
+// Rota de login
 app.post("/api/authenticate", (req, res) => {
-    const {nome, senha} = req.body;
-    const sql = `SELECT * FROM usuarios WHERE nome = ? and senha = ?`;
+    const { nome, senha } = req.body;
+    const sql = `SELECT * FROM usuarios WHERE nome = ? AND senha = ?`;
 
     db.query(sql, [nome, senha], (erro, resultados) => {
-        if(erro) {
-            return res.status(404).json({ message: "Falha ao realizar a consulta ao MySQL" });
+        if (erro) {
+            console.error("Erro ao consultar o MySQL:", erro);
+            return res.status(500).json({ message: "Erro no servidor" });
         }
-        
-        if(resultados.length === 0) {
+
+        if (resultados.length === 0) {
             return res.status(401).json({ message: "Nome ou senha incorretos" });
         }
 
         const usuario = resultados[0];
-        console.log("Usuario:", usuario);
         const payload = {
             id: usuario.id_usuario,
-            nome: usuario.nome
+            nome: usuario.nome,
         };
 
-        const token = jwt.sign(payload, 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b8552c541e2e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b8552c541e', { expiresIn: '1h' });
-        
-        res.cookie('authToken', token, {
+        const token = jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
+
+        res.cookie("authToken", token, {
             httpOnly: true,
-            secure: true,
-            sameSite: 'none',
-            domain: 'https://icecoin.onrender.com',
-            maxAge: 3600000
+            secure: false,
+            sameSite: "strict",
+            maxAge: 3600000, // 1 hora de expiração
         });
 
-        res.status(201).json({ message: "Login bem-sucedido" });
-    })
+        console.log('Cookie setado com sucesso:', token); // Log para verificação
+
+        res.status(200).json({ message: "Login bem-sucedido" });
+    });
+});
+
+app.get("/api/protected", authenticateToken, (req, res) => {
+    // Se passou pela autenticação, o usuário está autenticado
+    res.status(200).json({ message: "Acesso autorizado", user: req.user });
 });
 
 app.post("/api/cadastro", (req, res) => {
@@ -232,7 +252,6 @@ app.get("/api/idDestinatario/:endereco", (req, res) => {
     })
 });
 
-
 app.listen(port, () => {
-    console.log(`Servidor rodando com express na porta ${port}`);
+    console.log(`Servidor rodando na porta ${port}`);
 });

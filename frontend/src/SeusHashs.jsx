@@ -13,18 +13,6 @@ const SeusHashs = () => {
     const [contas, setContas] = useState([]);
     const navigate = useNavigate();
 
-    const carregaInfo = () => {
-        const token = Cookies.get('authToken');
-        if(token) {
-            const payload = token.split('.')[1];
-            const decodedPayload = JSON.parse(atob(payload));
-            console.log("Decoded Payload:", decodedPayload);
-            setId(decodedPayload.id);
-        } else {
-            navigate("/login");
-        }
-    }
-
     const carregaSeusHashs = () => {
         axios.get(`https://icecoin.onrender.com/api/hashs/${id}`)
         .then(resposta => {
@@ -36,8 +24,17 @@ const SeusHashs = () => {
     }
 
     useEffect(() => {
-        carregaInfo();
-    }, []);
+        // A requisição já irá enviar automaticamente os cookies, incluindo o token
+        axios
+            .get("https://icecoin.onrender.com/api/protected", { withCredentials: true })
+            .then((resposta) => {
+                setId(resposta.data.user.id);
+            })
+            .catch((erro) => {
+                console.error("Erro ao acessar dados do usuário:", erro);
+                navigate("/login");  // Se não conseguir acessar, redireciona para login
+            });
+    }, []);   
 
     useEffect(() => {
         if(id) {

@@ -15,20 +15,18 @@ const SeuRelatorio = () => {
     const [historico, setHistorico] = useState([]);
     const navigate = useNavigate();
 
-    const carregaInfo = () => {
-        const token = Cookies.get('authToken');
-        if (token) {
-            const payload = token.split('.')[1];
-            const decodedPayload = JSON.parse(atob(payload));
-            setId(decodedPayload.id);
-        } else {
-            navigate("/login");
-        }
-    };
-
     useEffect(() => {
-        carregaInfo();
-    }, []);
+        // A requisição já irá enviar automaticamente os cookies, incluindo o token
+        axios
+            .get("https://icecoin.onrender.com/api/protected", { withCredentials: true })
+            .then((resposta) => {
+                setId(resposta.data.user.id);
+            })
+            .catch((erro) => {
+                console.error("Erro ao acessar dados do usuário:", erro);
+                navigate("/login");  // Se não conseguir acessar, redireciona para login
+            });
+    }, []);   
 
     const carregaHistorico = () => {
         axios.get(`https://icecoin.onrender.com/api/historico/${id}`)
