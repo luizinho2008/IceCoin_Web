@@ -35,6 +35,10 @@ const Login = () => {
 
     return (
         <div>
+            <nav id="nav">
+                <img src={Logo} alt="logo icecoin" />
+                <h2>ICECOIN</h2>
+            </nav>
             <p style={{color: "white", fontWeight: "bolder"}}>
                 O IceCoin é uma criptomoeda emergente que combina tecnologia de
                 ponta com um conceito inovador de economia digital.
@@ -45,10 +49,6 @@ const Login = () => {
                 no mercado, o IceCoin é mais do que apenas uma moeda digital;
                 é uma nova forma de interagir com a economia global.
             </p>
-            <nav id="nav">
-                <img src={Logo} alt="logo icecoin" />
-                <h2>ICECOIN</h2>
-            </nav>
             <form id="form" onSubmit={logar} style={{ color: 'white' }}>
                 <label>Nome: </label>
                 <input
