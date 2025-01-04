@@ -10,7 +10,7 @@ const jwtSecret = "seu_segredo_aqui"; // Mude isso para o seu segredo real
 
 // Configuração do CORS
 app.use(cors({
-    origin: "http://localhost:5173", // URL do seu frontend
+    origin: "https://icecoin.vercel.app", // URL do seu frontend
     credentials: true, // Permite enviar e receber cookies
 }));
 
@@ -54,7 +54,7 @@ app.post("/api/authenticate", (req, res) => {
 
         res.cookie("authToken", token, {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: "strict",
             maxAge: 3600000, // 1 hora de expiração
         });
