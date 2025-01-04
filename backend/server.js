@@ -35,7 +35,7 @@ app.post("/api/authenticate", (req, res) => {
         
         res.cookie('authToken', token, {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: 'strict',
             maxAge: 3600000
         });
