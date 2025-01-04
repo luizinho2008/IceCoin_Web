@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 const port = 9000;
-const jwtSecret = "seu_segredo_aqui"; // Mude isso para o seu segredo real
+const jwtSecret = "ecf7452541frje7542kdkj542525212045jk"; // Mude isso para o seu segredo real
 
 // Configuração do CORS
 app.use(cors({

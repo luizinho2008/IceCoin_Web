@@ -35,6 +35,16 @@ const Login = () => {
 
     return (
         <div>
+            <p style={{color: "white", fontWeight: "bolder"}}>
+                O IceCoin é uma criptomoeda emergente que combina tecnologia de
+                ponta com um conceito inovador de economia digital.
+                Criado para representar um avanço na forma como lidamos com dinheiro
+                online, o IceCoin oferece segurança, rapidez e um sistema de
+                transações descentralizado que promete mudar o mercado financeiro.
+                Com uma base sólida em blockchain e uma crescente aceitação
+                no mercado, o IceCoin é mais do que apenas uma moeda digital;
+                é uma nova forma de interagir com a economia global.
+            </p>
             <nav id="nav">
                 <img src={Logo} alt="logo icecoin" />
                 <h2>ICECOIN</h2>
