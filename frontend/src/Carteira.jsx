@@ -13,26 +13,19 @@ const Carteira = () => {
     const [total, setTotal] = useState("");
     const navigate = useNavigate();
 
-    // Função para validar e carregar informações do token
     const carregaInfo = () => {
         const token = Cookies.get('authToken');
         if (token) {
-            try {
-                const payload = token.split('.')[1];
-                const decodedPayload = JSON.parse(atob(payload));
-                console.log("Decoded Payload:", decodedPayload);
-                setNome(decodedPayload.nome);
-                setId(decodedPayload.id);
-            } catch (error) {
-                console.error("Erro ao decodificar o token:", error);
-                navigate("/login"); // Redireciona caso o token seja inválido
-            }
+            const payload = token.split('.')[1];
+            const decodedPayload = JSON.parse(atob(payload));
+            console.log("Decoded Payload:", decodedPayload);
+            setNome(decodedPayload.nome);
+            setId(decodedPayload.id);
         } else {
-            navigate("/login"); // Redireciona caso o token não exista
+            navigate("/login");
         }
     };
 
-    // Função para carregar o total do usuário
     const carregaTotal = () => {
         if (id) {
             axios
@@ -47,15 +40,13 @@ const Carteira = () => {
         }
     };
 
-    // useEffect para carregar as informações do usuário ao montar o componente
     useEffect(() => {
         carregaInfo();
-    }, []); // Executa uma vez ao montar o componente
+    }, []);
 
-    // useEffect para carregar o total sempre que o `id` mudar
     useEffect(() => {
         carregaTotal();
-    }, [id]); // Observa alterações no `id`
+    }, [id]);
 
     return (
         <div>
