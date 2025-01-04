@@ -7,7 +7,12 @@ const cookieParser = require('cookie-parser');
 const port = 9000;
 
 const cors = require("cors");
-app.use(cors());
+
+app.use(cors({
+    origin: 'https://icecoin.vercel.app/',
+    credentials: true
+}));
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -36,7 +41,8 @@ app.post("/api/authenticate", (req, res) => {
         res.cookie('authToken', token, {
             httpOnly: true,
             secure: true,
-            sameSite: 'strict',
+            sameSite: 'none',
+            domain: 'https://icecoin.onrender.com/',
             maxAge: 3600000
         });
 
