@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const SeusHashs = () => {
     const [id, setId] = useState("");
@@ -13,7 +14,7 @@ const SeusHashs = () => {
     const navigate = useNavigate();
 
     const carregaInfo = () => {
-        const token = sessionStorage.getItem("token");
+        const token = Cookies.get('authToken');
         if(token) {
             const payload = token.split('.')[1];
             const decodedPayload = JSON.parse(atob(payload));

@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import Cookies from 'js-cookie';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -15,7 +16,7 @@ const SeuRelatorio = () => {
     const navigate = useNavigate();
 
     const carregaInfo = () => {
-        const token = sessionStorage.getItem("token");
+        const token = Cookies.get('authToken');
         if (token) {
             const payload = token.split('.')[1];
             const decodedPayload = JSON.parse(atob(payload));

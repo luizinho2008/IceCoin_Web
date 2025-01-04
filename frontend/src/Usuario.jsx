@@ -5,13 +5,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from './imgs/icecoin.png';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const Usuario = () => {
     const [nome, setNome] = useState("");
     const navigate = useNavigate();
 
     const carregaInfo = () => {
-        const token = sessionStorage.getItem("token");
+        const token = Cookies.get('authToken');
         if (token) {
             const payload = token.split('.')[1];
             const decodedPayload = JSON.parse(atob(payload));

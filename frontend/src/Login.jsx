@@ -40,7 +40,6 @@ const Login = () => {
                     });
                 }
                 else {
-                    sessionStorage.setItem("token", resposta.data.token);
                     navigate("/carteira");
                 }
             })

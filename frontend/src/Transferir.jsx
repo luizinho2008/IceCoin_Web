@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import SHA256 from 'crypto-js/sha256';
+import Cookies from 'js-cookie';
 
 const Transferir = () => {
     const [id, setId] = useState("");
@@ -17,7 +18,7 @@ const Transferir = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = sessionStorage.getItem("token");
+        const token = Cookies.get('authToken');
         if (token) {
             const payload = token.split('.')[1];
             const decodedPayload = JSON.parse(atob(payload));

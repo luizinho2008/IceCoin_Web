@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const GerarEndereco = () => {
     const [id, setId] = useState("");
@@ -14,7 +15,7 @@ const GerarEndereco = () => {
     const navigate = useNavigate();
 
     const carregaInfo = () => {
-        const token = sessionStorage.getItem("token");
+        const token = Cookies.get('authToken');
         if (token) {
             const payload = token.split('.')[1];
             const decodedPayload = JSON.parse(atob(payload));

@@ -3,11 +3,13 @@ const app = express();
 
 const db = require("./db");
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 const port = 9000;
 
 const cors = require("cors");
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 app.post("/api/authenticate", (req, res) => {
     const {nome, senha} = req.body;
@@ -30,7 +32,15 @@ app.post("/api/authenticate", (req, res) => {
         };
 
         const token = jwt.sign(payload, 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b8552c541e2e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b8552c541e', { expiresIn: '1h' });
-        res.status(201).json({ message: "Login bem-sucedido", token });
+        
+        res.cookie('authToken', token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'strict',
+            maxAge: 3600000
+        });
+
+        res.status(201).json({ message: "Login bem-sucedido" });
     })
 });
 
