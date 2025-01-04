@@ -11,18 +11,18 @@ const Usuario = () => {
     const [nome, setNome] = useState("");
     const navigate = useNavigate();
 
-    const carregaInfo = () => {
-        const token = Cookies.get('authToken');
-        if (token) {
-            const payload = token.split('.')[1];
-            const decodedPayload = JSON.parse(atob(payload));
-            console.log("Decoded Payload:", decodedPayload);
-            setNome(decodedPayload.nome);
-        }
-    }
-
     useEffect(() => {
-        carregaInfo();
+        // A requisição já irá enviar automaticamente os cookies, incluindo o token
+        axios
+            .get("https://icecoin.onrender.com/api/protected", { withCredentials: true })
+            .then((resposta) => {
+                // Agora você pode acessar os dados do usuário retornados pelo backend
+                setNome(resposta.data.user.nome);
+            })
+            .catch((erro) => {
+                console.error("Erro ao acessar dados do usuário:", erro);
+                navigate("/login");  // Se não conseguir acessar, redireciona para login
+            });
     }, []);
 
     const sair = () => {
