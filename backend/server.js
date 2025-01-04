@@ -9,7 +9,7 @@ const port = 9000;
 const cors = require("cors");
 
 app.use(cors({
-    origin: 'https://icecoin.vercel.app/',
+    origin: 'https://icecoin.vercel.app',
     credentials: true
 }));
 
@@ -42,7 +42,7 @@ app.post("/api/authenticate", (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: 'none',
-            domain: 'https://icecoin.onrender.com/',
+            domain: 'https://icecoin.onrender.com',
             maxAge: 3600000
         });
 
