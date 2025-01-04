@@ -22,7 +22,7 @@ const Login = () => {
             return;
         }
 
-        axios.post("https://icecoin.onrender.com/api/authenticate", {nome, senha})
+        axios.post("https://icecoin.onrender.com/api/authenticate", {nome, senha}, {withCredentials: true})
         .then(resposta => {
             console.log(resposta);
             navigate("/carteira");
