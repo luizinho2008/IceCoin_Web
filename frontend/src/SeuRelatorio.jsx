@@ -5,7 +5,7 @@ import Logo from './imgs/icecoin.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
