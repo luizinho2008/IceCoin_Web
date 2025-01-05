@@ -6,7 +6,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 const SeusHashs = () => {
     const [id, setId] = useState("");
@@ -24,16 +23,14 @@ const SeusHashs = () => {
     }
 
     useEffect(() => {
-        // A requisição já irá enviar automaticamente os cookies, incluindo o token
-        axios
-            .get("https://icecoin.onrender.com/api/protected", { withCredentials: true })
-            .then((resposta) => {
-                setId(resposta.data.user.id);
-            })
-            .catch((erro) => {
-                console.error("Erro ao acessar dados do usuário:", erro);
-                navigate("/login");  // Se não conseguir acessar, redireciona para login
-            });
+        axios.get("https://icecoin.onrender.com/api/protected", { withCredentials: true })
+        .then((resposta) => {
+            setId(resposta.data.user.id);
+        })
+        .catch((erro) => {
+            console.error("Erro ao acessar dados do usuário:", erro);
+            navigate("/login");
+        });
     }, []);   
 
     useEffect(() => {

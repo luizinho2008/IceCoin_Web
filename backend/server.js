@@ -6,30 +6,27 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 const port = 9000;
-const jwtSecret = "ecf7452541frje7542kdkj542525212045jk"; // Mude isso para o seu segredo real
+const jwtSecret = "ecf7452541frje7542kdkj542525212045jk";
 
-// Configuração do CORS
 app.use(cors({
-    origin: "https://icecoin.vercel.app", // URL do seu frontend
-    credentials: true, // Permite enviar e receber cookies
+    origin: "https://icecoin.vercel.app",
+    credentials: true,
 }));
 
 app.use(express.json());
 app.use(cookieParser());
 
-// Middleware para autenticação do token
 const authenticateToken = (req, res, next) => {
     const token = req.cookies.authToken;
     if (!token) return res.status(401).json({ message: "Token não encontrado" });
 
     jwt.verify(token, jwtSecret, (err, decoded) => {
         if (err) return res.status(403).json({ message: "Token inválido" });
-        req.user = decoded; // Aqui você coloca os dados do usuário no request
-        next(); // Passa para o próximo middleware ou rota
+        req.user = decoded;
+        next();
     });
 };
 
-// Rota de login
 app.post("/api/authenticate", (req, res) => {
     const { nome, senha } = req.body;
     const sql = `SELECT * FROM usuarios WHERE nome = ? AND senha = ?`;
@@ -56,18 +53,22 @@ app.post("/api/authenticate", (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: "none",
-            maxAge: 3600000, // 1 hora de expiração
+            maxAge: 3600000
         });
 
-        console.log('Cookie setado com sucesso:', token); // Log para verificação
+        console.log('Cookie setado com sucesso:', token);
 
         res.status(200).json({ message: "Login bem-sucedido" });
     });
 });
 
 app.get("/api/protected", authenticateToken, (req, res) => {
-    // Se passou pela autenticação, o usuário está autenticado
     res.status(200).json({ message: "Acesso autorizado", user: req.user });
+});
+
+app.get("/api/logout", (req, res) => {
+    res.clearCookie('authToken');
+    res.json({ message: "Logout feito com sucesso, cookie deletado"});
 });
 
 app.post("/api/cadastro", (req, res) => {

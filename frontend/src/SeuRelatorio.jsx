@@ -5,8 +5,7 @@ import Logo from './imgs/icecoin.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import Cookies from 'js-cookie';
+import { Chart as ChartJS, CategoryScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -16,16 +15,14 @@ const SeuRelatorio = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // A requisição já irá enviar automaticamente os cookies, incluindo o token
-        axios
-            .get("https://icecoin.onrender.com/api/protected", { withCredentials: true })
-            .then((resposta) => {
-                setId(resposta.data.user.id);
-            })
-            .catch((erro) => {
-                console.error("Erro ao acessar dados do usuário:", erro);
-                navigate("/login");  // Se não conseguir acessar, redireciona para login
-            });
+        axios.get("https://icecoin.onrender.com/api/protected", { withCredentials: true })
+        .then((resposta) => {
+            setId(resposta.data.user.id);
+        })
+        .catch((erro) => {
+            console.error("Erro ao acessar dados do usuário:", erro);
+            navigate("/login");
+        });
     }, []);   
 
     const carregaHistorico = () => {

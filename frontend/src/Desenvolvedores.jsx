@@ -2,14 +2,10 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/Desenvolvedores.css';
 import Logo from './imgs/icecoin.png';
-import { Link, useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import { useState } from 'react';
-import axios from 'axios';
 
 const Login = () => {
-
     return (
         <div>
             <nav id='nav'>

@@ -7,7 +7,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import SHA256 from 'crypto-js/sha256';
-import Cookies from 'js-cookie';
 
 const Transferir = () => {
     const [id, setId] = useState("");
@@ -18,16 +17,14 @@ const Transferir = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // A requisição já irá enviar automaticamente os cookies, incluindo o token
-        axios
-            .get("https://icecoin.onrender.com/api/protected", { withCredentials: true })
-            .then((resposta) => {
-                setId(resposta.data.user.id);
-            })
-            .catch((erro) => {
-                console.error("Erro ao acessar dados do usuário:", erro);
-                navigate("/login");  // Se não conseguir acessar, redireciona para login
-            });
+        axios.get("https://icecoin.onrender.com/api/protected", { withCredentials: true })
+        .then((resposta) => {
+            setId(resposta.data.user.id);
+        })
+        .catch((erro) => {
+            console.error("Erro ao acessar dados do usuário:", erro);
+            navigate("/login");
+        });
     }, []);   
 
     useEffect(() => {

@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 const GerarEndereco = () => {
     const [id, setId] = useState("");
@@ -15,17 +14,14 @@ const GerarEndereco = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // A requisição já irá enviar automaticamente os cookies, incluindo o token
-        axios
-            .get("https://icecoin.onrender.com/api/protected", { withCredentials: true })
-            .then((resposta) => {
-                // Agora você pode acessar os dados do usuário retornados pelo backend
-                setId(resposta.data.user.id);
-            })
-            .catch((erro) => {
-                console.error("Erro ao acessar dados do usuário:", erro);
-                navigate("/login");  // Se não conseguir acessar, redireciona para login
-            });
+        axios.get("https://icecoin.onrender.com/api/protected", { withCredentials: true })
+        .then((resposta) => {
+            setId(resposta.data.user.id);
+        })
+        .catch((erro) => {
+            console.error("Erro ao acessar dados do usuário:", erro);
+            navigate("/login");
+        });
     }, []);   
 
     const criaEndereco = () => {

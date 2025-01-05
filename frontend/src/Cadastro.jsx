@@ -2,7 +2,7 @@ import React from 'react';
 import './styles/Cadastro.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from './imgs/icecoin.png';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
@@ -12,7 +12,6 @@ const Cadastro = () => {
     const [nome, setNome] = useState("");
     const [senha, setSenha] = useState("");
     const [confirmarSenha, setConfirmarSenha] = useState("");
-    // const navigate = useNavigate();
 
     const cadastrar = (event) => {
         event.preventDefault();

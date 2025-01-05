@@ -5,7 +5,6 @@ import Logo from './imgs/icecoin.png';
 import User from './imgs/user.png';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 
 const Carteira = () => {
     const [nome, setNome] = useState("");
