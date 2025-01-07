@@ -67,7 +67,11 @@ app.get("/api/protected", authenticateToken, (req, res) => {
 });
 
 app.get("/api/logout", (req, res) => {
-    res.clearCookie('authToken');
+    res.clearCookie('authToken', {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none"
+    });
     res.json({ message: "Logout feito com sucesso, cookie deletado"});
 });
 
